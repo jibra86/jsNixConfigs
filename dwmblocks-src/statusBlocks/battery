@@ -1,0 +1,14 @@
+#!/bin/sh
+
+battery_info=$(acpi -b)
+
+battery_percentage=$(echo $(acpi -b | awk -F ', ' '{print $2}'))
+battery_state=$(echo $(acpi -b | awk '{print $1}'))
+
+if [ "$battery_state" = "Charging" ]; then
+    echo -e " $battery_percentage"  # Green for charging
+elif [ "$battery_state" = "Discharging" ]; then
+    echo -e " $battery_percentage"  # Red for discharging
+else
+    echo -e " $battery_percentage"  # Blue for fully charged
+}
